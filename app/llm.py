@@ -15,3 +15,6 @@ def get_llm():
         model="llama-3.1-8b-instant",
         temperature=0
     )
+
+print("GROQ_API_KEY loaded:", bool(os.getenv("GROQ_API_KEY")))
+
