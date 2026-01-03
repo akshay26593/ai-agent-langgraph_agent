@@ -1,13 +1,22 @@
-fastapi
-uvicorn
-langgraph
-langchain
-langchain-huggingface
-sentence-transformers>=2.6.0
-langchain-groq
-langchain-text-splitters
+# ---------- Core API ----------
+fastapi==0.110.0
+uvicorn[standard]==0.25.0
 
-faiss-cpu
-pypdf
-sympy
-python-multipart
+# ---------- LangChain (PINNED) ----------
+langchain==0.1.16
+langchain-community==0.0.36
+langchain-text-splitters==0.0.1
+langchain-core==0.1.48
+
+# ---------- Embeddings / Vector Store ----------
+sentence-transformers==2.2.2
+faiss-cpu==1.7.4
+
+# ---------- Document loading ----------
+pypdf==3.17.4
+
+# ---------- Utils ----------
+numpy==1.26.4
+pydantic==2.6.4
+requests==2.31.0
+tqdm==4.66.2
