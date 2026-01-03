@@ -1,23 +1,15 @@
-# ---------- Core API ----------
 fastapi==0.110.0
-uvicorn[standard]==0.25.0
+uvicorn[standard]==0.27.1
 
-# ---------- LangChain (PINNED) ----------
+# --- LangChain ecosystem (LOCKED & COMPATIBLE) ---
 langchain==0.1.16
-langchain-community==0.0.36
+langchain-core==0.1.53
+langchain-community==0.0.32
 langchain-text-splitters==0.0.1
-langchain-core==0.1.48
 
-# ---------- Embeddings / Vector Store ----------
+# --- ML / Vector ---
 sentence-transformers==2.2.2
-faiss-cpu==1.7.4.post2
+faiss-cpu==1.8.0
 
-
-# ---------- Document loading ----------
-pypdf==3.17.4
-
-# ---------- Utils ----------
-numpy==1.26.4
-pydantic==2.6.4
-requests==2.31.0
-tqdm==4.66.2
+# --- PDF ---
+pypdf==4.1.0
