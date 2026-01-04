@@ -15,17 +15,10 @@ spec:
     spec:
       containers:
         - name: ai-agent
-          image: 557514745876.dkr.ecr.us-east-1.amazonaws.com/ai-agent:latest
+          image: 557514745876.dkr.ecr.us-east-1.amazonaws.com/ai-agent:IMAGE_TAG
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
-          resources:
-            requests:
-              cpu: "250m"
-              memory: "768Mi"
-            limits:
-              cpu: "500m"
-              memory: "1Gi"
           env:
             - name: GROQ_API_KEY
               valueFrom:

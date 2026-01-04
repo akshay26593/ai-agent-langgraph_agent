@@ -2,7 +2,7 @@ name: Build and Push Image
 
 on:
   push:
-    branches: [ "master" ]
+    branches: ["master"]
 
 env:
   AWS_REGION: us-east-1
@@ -25,8 +25,8 @@ jobs:
 
       - uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Build & Push (latest)
+      - name: Build & Push
         run: |
-          IMAGE=557514745876.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY}:latest
+          IMAGE=557514745876.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY}:${GITHUB_SHA}
           docker build -t $IMAGE .
           docker push $IMAGE
