@@ -4,7 +4,7 @@ metadata:
   name: ai-agent
   namespace: ai-agent
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: ai-agent
@@ -15,13 +15,16 @@ spec:
     spec:
       containers:
         - name: ai-agent
-          image: 557514745876.dkr.ecr.us-east-1.amazonaws.com/ai-agent:IMAGE_TAG
+          image: 557514745876.dkr.ecr.us-east-1.amazonaws.com/ai-agent:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 8000
+            - containerPort: 8080
           env:
             - name: GROQ_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: groq-secret
-                  key: api_key
+                  name: ai-agent-secrets
+                  key: GROQ_API_KEY
+            - name: ENVIRONMENT
+              value: "production"
+      restartPolicy: Always
