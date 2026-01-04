@@ -15,8 +15,7 @@ spec:
     spec:
       containers:
         - name: ai-agent
-          # ⛔ DO NOT USE :latest
-          image: 557514745876.dkr.ecr.us-east-1.amazonaws.com/ai-agent:IMAGE_TAG
+          image: 557514745876.dkr.ecr.us-east-1.amazonaws.com/ai-agent:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
@@ -28,7 +27,6 @@ spec:
               cpu: "500m"
               memory: "1Gi"
           env:
-            # ✅ USE GROQ KEY
             - name: GROQ_API_KEY
               valueFrom:
                 secretKeyRef:
