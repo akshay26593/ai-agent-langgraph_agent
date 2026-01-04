@@ -1,13 +1,15 @@
 import os
+import shutil
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
-from langchain_openai import OpenAIEmbeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
 
 VECTOR_DIR = "data/index"
 
-embeddings = OpenAIEmbeddings(
-    model="text-embedding-3-small"
+# ✅ Fully local embeddings (NO internet)
+embeddings = HuggingFaceEmbeddings(
+    model_name="sentence-transformers/all-MiniLM-L6-v2"
 )
 
 def build_vectorstore(pdf_path: str) -> int:
@@ -27,8 +29,6 @@ def build_vectorstore(pdf_path: str) -> int:
 
     return len(chunks)
 
-
-
 def load_vectorstore():
     if not os.path.exists(VECTOR_DIR):
         raise RuntimeError("Vectorstore not found. Upload a PDF first.")
@@ -40,9 +40,6 @@ def load_vectorstore():
             allow_dangerous_deserialization=True
         )
     except Exception as e:
-        # Corrupted or incompatible index
-        print("⚠️ FAISS load failed, deleting index:", e)
-        import shutil
+        print("⚠️ Corrupted FAISS index, deleting:", e)
         shutil.rmtree(VECTOR_DIR)
-        raise RuntimeError("Vectorstore was incompatible. Please upload PDF again.")
-
+        raise RuntimeError("Vectorstore corrupted. Please upload PDF again.")
