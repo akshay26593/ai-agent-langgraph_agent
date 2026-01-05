@@ -15,12 +15,20 @@ spec:
         app: ai-agent
     spec:
       containers:
-      - name: ai-agent
-        image: 557514745876.dkr.ecr.us-east-1.amazonaws.com/ai-agent:latest
-        ports:
-        - containerPort: 8000
-        env:
-        - name: AWS_REGION
-          value: us-east-1
-        - name: STAGE
-          value: production
+        - name: ai-agent
+          image: 557514745876.dkr.ecr.us-east-1.amazonaws.com/ai-agent:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: AWS_REGION
+              value: us-east-1
+            - name: STAGE
+              value: production
+            - name: GROQ_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: groq-api-secret
+                  key: api-key
+          command: ["uvicorn"]
+          args: ["app.main:app", "--host", "0.0.0.0", "--port", "8080"]
