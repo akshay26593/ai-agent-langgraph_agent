@@ -3,30 +3,45 @@ from fastapi import FastAPI, UploadFile, File
 from app.vectorstore import build_vectorstore, load_vectorstore
 from app.llm import get_llm
 
-app = FastAPI()
+app = FastAPI(title="Agentic RAG API")
 
 UPLOAD_DIR = "data/pdfs"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
+
+# Keep vectorstore loaded in memory (like Colab)
+VECTORSTORE = None
+
 
 @app.get("/health")
 def health():
     return {"status": "ok"}
 
+
 @app.post("/upload-pdf")
 def upload_pdf(file: UploadFile = File(...)):
+    global VECTORSTORE
+
     pdf_path = f"{UPLOAD_DIR}/{file.filename}"
     with open(pdf_path, "wb") as f:
         f.write(file.file.read())
 
     chunks = build_vectorstore(pdf_path)
+    VECTORSTORE = load_vectorstore()
     return {"chunks": chunks}
+
 
 @app.post("/chat")
 def chat(message: str):
-    db = load_vectorstore()
+    global VECTORSTORE
     llm = get_llm()
 
-    docs = db.similarity_search(message, k=3)
+    if VECTORSTORE is None:
+        try:
+            VECTORSTORE = load_vectorstore()
+        except Exception:
+            return {"error": "Vectorstore not found. Please upload a PDF first."}
+
+    docs = VECTORSTORE.similarity_search(message, k=3)
     context = "\n".join(d.page_content for d in docs)
 
     response = llm.invoke(

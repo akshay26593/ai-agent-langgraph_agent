@@ -3,9 +3,10 @@ kind: Service
 metadata:
   name: ai-agent
 spec:
-  type: LoadBalancer
   selector:
     app: ai-agent
   ports:
-  - port: 80
-    targetPort: 8000
+    - protocol: TCP
+      port: 80
+      targetPort: 8080   # ✅ FIXED
+  type: LoadBalancer
