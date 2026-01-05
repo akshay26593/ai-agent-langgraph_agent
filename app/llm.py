@@ -7,6 +7,6 @@ def get_llm():
         raise RuntimeError("GROQ_API_KEY not set")
 
     return ChatGroq(
-        model="mixtral-8x7b-32768",
+        model="llama-3.1-8b-instant",
         api_key=groq_api_key
     )
