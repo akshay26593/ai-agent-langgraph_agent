@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: ai-agent
-          image: 557514745876.dkr.ecr.us-east-1.amazonaws.com/ai-agent:latest
+          image: IMAGE_PLACEHOLDER
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -31,4 +31,9 @@ spec:
                   name: groq-api-secret
                   key: api-key
           command: ["uvicorn"]
-          args: ["app.main:app", "--host", "0.0.0.0", "--port", "8080"]
+          args:
+            - app.main:app
+            - --host
+            - 0.0.0.0
+            - --port
+            - "8080"
