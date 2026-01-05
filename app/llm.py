@@ -6,3 +6,11 @@ def get_llm():
     if not groq_api_key:
         raise RuntimeError("GROQ_API_KEY not set")
     return ChatGroq(model="llama-3.1-8b-instant", api_key=groq_api_key)
+from langchain_groq import ChatGroq
+import os
+
+def get_llm():
+    groq_api_key = os.getenv("GROQ_API_KEY")
+    if not groq_api_key:
+        raise RuntimeError("GROQ_API_KEY not set")
+    return ChatGroq(model="mixtral-8x7b-32768", api_key=groq_api_key)
