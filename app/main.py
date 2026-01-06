@@ -6,7 +6,10 @@ from app.llm import get_llm
 
 app = FastAPI(title="Agentic RAG API")
 
-UPLOAD_DIR = "/app/data/pdfs"
+# Detect runtime environment
+BASE_DIR = os.getenv("APP_BASE_DIR", os.getcwd())
+
+UPLOAD_DIR = os.path.join(BASE_DIR, "data/pdfs")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 VECTORSTORE = None
